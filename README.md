@@ -8,7 +8,7 @@ This project uses the **Model Context Protocol (MCP)** to give an LLM (Gemini 2.
 
 ## 📸 Demo
 
-> ![UI](image.png)
+![UI](<Pasted Graphic 6.png>)
 ![The Backend working](<Pasted Graphic 3.png>)
 ![Final Code](<Pasted Graphic 4.png>)
 
