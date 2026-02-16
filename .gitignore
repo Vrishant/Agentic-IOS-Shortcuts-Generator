@@ -1,23 +1,46 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# --- Dependencies (The big one) ---
+# Ignores 'node_modules' in the root and ALL subdirectories
+node_modules/
+**/node_modules/
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
-
-# production
-/build
-
-# misc
-.DS_Store
+# --- Environment Variables (Security) ---
+# Never commit API keys
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+backend/.env
+frontend/.env
 
+# --- Build Outputs ---
+# React/Node build artifacts
+dist/
+build/
+out/
+coverage/
+.next/
+
+# --- Logs ---
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+logs/
+*.log
+
+# --- System & IDE Files ---
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- Project Specific (Agentic Shortcuts) ---
+# Ignore the mirrored SQLite database to prevent large file errors
+*.sqlite
+*.db
+shortcuts_mcp_mirror.sqlite
+
+# Ignore generated shortcut files
+*.shortcut

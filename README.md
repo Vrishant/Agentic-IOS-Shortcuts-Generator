@@ -1,70 +1,162 @@
-# Getting Started with Create React App
+# 🍎 Agentic Apple Shortcuts Generator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**An Agentic AI that reverse-engineers the internal macOS Shortcuts database to generate valid automation code.**
 
-## Available Scripts
+This project uses the **Model Context Protocol (MCP)** to give an LLM (Gemini 2.0 Flash) direct access to the hidden `Tools.sqlite` database inside macOS. Instead of hallucinating Action IDs, the Agent searches the live database, retrieves parameter schemas, and generates syntactically correct **Jellycuts (Swift)** code.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 📸 Demo
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+> *Add your screenshots here: (1) The Clean UI, (2) The "Process Log" Terminal showing MCP calls, (3) The Final Code.*
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 🚀 Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* **🕵️‍♂️ Reverse Engineering:** Connects directly to the internal Apple Shortcuts SQLite database to find undocumented Action IDs.
+* **🤖 Agentic Workflow:** Uses **MCP** (Model Context Protocol) to let the AI "think" and "search" before answering.
+* **⚡ Real-Time Transparency:** "Glass Box" UI shows exactly which database queries the Agent is running in real-time.
+* **🍏 Jellycuts Generation:** Outputs valid, compile-ready code for [Jellycuts](https://jellycuts.com/), bypassing complex signing issues.
+* **🌑 Cyber-Dark UI:** A modern, VS Code-inspired interface built with React.
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🛠️ Tech Stack
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* **Frontend:** React.js, Lucide Icons, CSS Variables (Dark Mode)
+* **Backend:** Node.js, Express
+* **Database:** `better-sqlite3` (Reads local macOS `Tools.sqlite`)
+* **AI Model:** Google Gemini 2.0 Flash (`@google/genai` SDK)
+* **Protocol:** Model Context Protocol (MCP) SDK
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## 📋 Prerequisites
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+* **macOS:** This tool requires access to the local Shortcuts database found only on Macs.
+* **Node.js:** v18 or higher.
+* **Gemini API Key:** Get one for free at [Google AI Studio](https://aistudio.google.com/).
+* **Terminal Access:** You must grant your Terminal/VS Code **Full Disk Access** to read the Apple Library folders.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## ⚙️ Installation & Setup
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 1. Clone the Repository
 
-## Learn More
+```bash
+git clone https://github.com/yourusername/agentic-shortcuts.git
+cd agentic-shortcuts
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 2. Backend Setup
 
-### Code Splitting
+The backend runs the MCP Server and connects to the SQLite database.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```bash
+cd backend
+npm install
 
-### Analyzing the Bundle Size
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+**Create a `.env` file** in the `backend` folder:
 
-### Making a Progressive Web App
+```env
+GEMINI_API_KEY=your_api_key_here
+PORT=8000
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```
 
-### Advanced Configuration
+### 3. Frontend Setup
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+The frontend is a React dashboard.
 
-### Deployment
+```bash
+cd ../frontend
+npm install
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 🔓 Critical Step: Permissions
+
+Apple protects the Shortcuts database (`~/Library/Shortcuts/...`). To allow the backend to read it:
+
+1. Open **System Settings** > **Privacy & Security** > **Full Disk Access**.
+2. Click the **+** button.
+3. Add your **Terminal** app (e.g., iTerm2, Terminal) or **VS Code**.
+4. Restart your Terminal/Editor.
+
+*Note: The script creates a temporary copy of the database in `/tmp` to avoid file locking issues.*
+
+---
+
+## ▶️ Usage
+
+### Start the Backend
+
+```bash
+# In /backend directory
+node server.js
+
+```
+
+*You should see: `✅ Shortcuts Database mirrored` and `🚀 Server running on port 8000*`
+
+### Start the Frontend
+
+```bash
+# In /frontend directory
+npm start
+
+```
+
+*Opens `http://localhost:3000*`
+
+### How to Use
+
+1. Type a request: *"If battery is < 20%, turn on Low Power Mode."*
+2. Watch the **"Show Process"** toggle to see the Agent searching the database.
+3. Copy the generated **Jellycuts** code.
+4. Paste it into the [Jellycuts App](https://jellycuts.com/) on your iPhone/Mac to export it as a real Shortcut.
+
+---
+
+## 🧠 Architecture (How it works)
+
+1. **User Query:** Sent from React to Node.js.
+2. **Agent Loop:**
+* The Agent (Gemini) analyzes the request.
+* It realizes it needs technical IDs (e.g., `is.workflow.actions.getbatterylevel`).
+* It calls the **MCP Tool**: `search_internal_actions("battery")`.
+
+
+3. **MCP Server:**
+* Queries the mirrored `Tools.sqlite` file using SQL.
+* Returns the JSON schema of the action.
+
+
+4. **Code Generation:**
+* The Agent uses the schema to construct valid Jellycuts syntax.
+
+
+5. **Response:** The UI renders the explanation, the code, and the execution log.
+
+---
+
+## 🤝 Contributing
+
+Pull requests are welcome! If you find new tables in the Apple Shortcuts database that reveal more functionality, please open an issue.
+
+## 📄 License
+
+MIT License.
+
+---
+
+### ⚠️ Disclaimer
+
+This tool interacts with internal macOS databases that are not documented by Apple. It is for educational and research purposes. Always back up your Shortcuts before running generated code.
